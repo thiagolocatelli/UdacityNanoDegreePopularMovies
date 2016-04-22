@@ -1,0 +1,3 @@
+include ':app', ':moviedb_api'
+
+project(':moviedb_api').projectDir = new File('java_modules/moviedb_api')

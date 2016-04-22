@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.andexert.library.RippleView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/more"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitXY" />
+
+</com.andexert.library.RippleView>

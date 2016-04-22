@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sort_types">
+        <item>@string/pref_sorttype_label_nowplaying</item>
+        <item>@string/pref_sorttype_label_popular</item>
+        <item>@string/pref_sorttype_label_rated</item>
+        <item>@string/pref_sorttype_label_upcoming</item>
+    </string-array>
+
+    <string-array name="sort_type_values">
+        <item>@string/pref_sorttype_nowplaying</item>
+        <item>@string/pref_sorttype_popular</item>
+        <item>@string/pref_sorttype_rated</item>
+        <item>@string/pref_sorttype_upcoming</item>
+    </string-array>
+
+</resources>

@@ -5,6 +5,7 @@ package com.github.thiagolocatelli.popularmovies.app.util;
  */
 public class Constants {
 
+    public static final String MOVIE_LIST = "MOVIE_LIST";
     public static final String EXTRA_MOVIE_ID = "EXTRA_MOVIE_ID";
     public static final String EXTRA_MOVIE = "EXTRA_MOVIE";
 

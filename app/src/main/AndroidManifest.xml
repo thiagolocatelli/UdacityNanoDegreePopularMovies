@@ -26,11 +26,10 @@
         <activity
             android:name=".activity.MovieDetailsActivity"
             android:parentActivityName=".activity.MainActivity"
-            android:label="@string/title_activity_movie_details"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_movie_details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value="com.github.thiagolocatelli.popularmovies.app.activity.MainActivity" />
         </activity>
 
         <activity
@@ -39,7 +38,7 @@
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value="com.github.thiagolocatelli.popularmovies.app.activity.MainActivity" />
         </activity>
 
     </application>

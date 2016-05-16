@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.thiagolocatelli.moviedb.MovieDBApi;
 import com.github.thiagolocatelli.moviedb.model.Credit;
 import com.github.thiagolocatelli.moviedb.model.Movie;
@@ -31,7 +32,6 @@ import com.github.thiagolocatelli.popularmovies.app.parcel.MovieParcel;
 import com.github.thiagolocatelli.popularmovies.app.util.Constants;
 import com.github.thiagolocatelli.popularmovies.app.util.DatabaseUtility;
 import com.github.thiagolocatelli.popularmovies.app.util.PosterUtility;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,6 +83,9 @@ public class MovieDetailsFragment extends Fragment implements LoadMovieAsync.Loa
             mTitle.setText(mMovie.getTitle());
             mDescription.setText(mMovie.getSynopsis());
 
+            if(mMovie.getRuntime() != null) mMovieDuration.setText("Duration: " + convertTime(mMovie.getRuntime()));
+            if(mMovie.getVoteAverage() != null) mMovieRating.setText("Rating: " + mMovie.getVoteAverage().toString() + "/10");
+
             mFab.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if(DatabaseUtility.isFavorited(getActivity(), mMovie.getMovieId())) {
@@ -129,9 +132,17 @@ public class MovieDetailsFragment extends Fragment implements LoadMovieAsync.Loa
         this.mLoadMovieAsync = new LoadMovieAsync(mMovieDBApi, this);
 
         if(mMovie != null) {
-            Picasso.with(getActivity())
+//            Picasso.with(getActivity())
+//                    .load(PosterUtility.getFullPosterPath342(mMovie.getPosterPath()))
+//                    .placeholder(R.drawable.movie_placeholder)
+//                    .into(mMoviePoster);
+
+
+
+            Glide.with(this)
                     .load(PosterUtility.getFullPosterPath342(mMovie.getPosterPath()))
                     .placeholder(R.drawable.movie_placeholder)
+                    .fitCenter()
                     .into(mMoviePoster);
         }
 
@@ -159,7 +170,7 @@ public class MovieDetailsFragment extends Fragment implements LoadMovieAsync.Loa
         mCastRecyclerView.setAdapter(new CastAdapter(getContext(), movie.getCredits().getCast()));
         mCrewRecyclerView.setAdapter(new CrewAdapter(getContext(), movie.getCredits().getCrew()));
         mTrailersRecyclerView.setAdapter(new TrailerAdapter(getContext(), movie.getTrailers().getYoutube()));
-                mScrollView.setVisibility(View.VISIBLE);
+        mScrollView.setVisibility(View.VISIBLE);
 
         populateReviews(movie.getReviews().getResults());
 
@@ -197,6 +208,7 @@ public class MovieDetailsFragment extends Fragment implements LoadMovieAsync.Loa
     @Override
     public void onMovieLoadError(Exception e) {
         Log.e(LOG_TAG, "Error while loading movie details: " + e.getMessage());
+        mScrollView.setVisibility(View.VISIBLE);
     }
 
     private String convertTime(long t) {

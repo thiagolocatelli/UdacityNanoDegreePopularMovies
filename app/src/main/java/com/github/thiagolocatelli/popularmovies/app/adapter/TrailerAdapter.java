@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.github.thiagolocatelli.moviedb.model.Video;
 import com.github.thiagolocatelli.popularmovies.app.R;
 import com.github.thiagolocatelli.popularmovies.app.util.PosterUtility;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,11 +39,17 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        viewHolder.imgPoster.setTag(videos.get(position));
+//        viewHolder.imgPoster.setTag(videos.get(position));
 
-        Picasso.with(mContext)
+//        Picasso.with(mContext)
+//                .load(PosterUtility.getYouTubePosterPath(videos.get(position).getSource()))
+//                .placeholder(R.drawable.movie_placeholder)
+//                .into(viewHolder.imgPoster);
+
+        Glide.with(mContext)
                 .load(PosterUtility.getYouTubePosterPath(videos.get(position).getSource()))
                 .placeholder(R.drawable.movie_placeholder)
+                .fitCenter()
                 .into(viewHolder.imgPoster);
 
         viewHolder.imgPoster.setOnClickListener(new View.OnClickListener() {

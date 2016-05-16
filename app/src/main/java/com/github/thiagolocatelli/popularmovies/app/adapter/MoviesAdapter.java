@@ -1,26 +1,20 @@
 package com.github.thiagolocatelli.popularmovies.app.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.andexert.library.RippleView;
-import com.github.thiagolocatelli.moviedb.model.Movie;
-import com.github.thiagolocatelli.popularmovies.app.activity.MovieDetailsActivity;
+import com.bumptech.glide.Glide;
+import com.github.thiagolocatelli.popularmovies.app.R;
 import com.github.thiagolocatelli.popularmovies.app.parcel.MovieParcel;
-import com.github.thiagolocatelli.popularmovies.app.util.Constants;
+import com.github.thiagolocatelli.popularmovies.app.util.PosterUtility;
 import com.github.thiagolocatelli.popularmovies.app.viewholder.MovieViewHolder;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.github.thiagolocatelli.popularmovies.app.R;
-
-import com.github.thiagolocatelli.popularmovies.app.util.PosterUtility;
 
 /**
  * Created by thiago on 4/20/16.
@@ -73,10 +67,11 @@ public class MoviesAdapter  extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         MovieParcel movie = mMovieList.get(position);
-        Picasso.with(mContext)
+
+        Glide.with(mContext)
                 .load(PosterUtility.getFullPosterPath342(movie.getPosterPath()))
                 .placeholder(R.drawable.movie_placeholder)
-                .fit()
+                .fitCenter()
                 .into(holder.imageView);
     }
 

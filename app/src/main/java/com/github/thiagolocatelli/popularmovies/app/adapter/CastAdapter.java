@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.thiagolocatelli.moviedb.model.Credit;
 import com.github.thiagolocatelli.popularmovies.app.R;
 import com.github.thiagolocatelli.popularmovies.app.util.PosterUtility;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,16 +37,15 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.ViewHolder>  {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
         viewHolder.lblRealName.setText(cast.get(position).getName());
         viewHolder.lblInMovieName.setText(cast.get(position).getCharacter());
-        viewHolder.imgPoster.setTag(cast.get(position));
+        //viewHolder.imgPoster.setTag(cast.get(position));
 
-        Picasso.with(mContext)
-                .load(PosterUtility.getFullPosterPath300(cast.get(position).getProfilePath()))
+        Glide.with(mContext)
+                .load(PosterUtility.getFullPosterPath342(cast.get(position).getProfilePath()))
                 .placeholder(R.drawable.movie_placeholder)
+                .fitCenter()
                 .into(viewHolder.imgPoster);
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

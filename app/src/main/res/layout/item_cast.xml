@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:paddingRight="5dp">
+
+    <RelativeLayout
+        android:layout_width="110dp"
+        android:layout_height="160dp">
+
+        <ImageView
+            android:id="@+id/imgPoster"
+            android:layout_width="110dp"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:transitionName="profile"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lblRealName"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dip"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="aaa"
+        android:textSize="13sp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/lblInMovieName"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dip"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="aaa"
+        android:textSize="13sp"
+        android:textColor="@android:color/darker_gray"/>
+
+</LinearLayout>

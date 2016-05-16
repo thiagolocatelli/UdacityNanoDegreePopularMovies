@@ -8,5 +8,6 @@ public class Constants {
     public static final String MOVIE_LIST = "MOVIE_LIST";
     public static final String EXTRA_MOVIE_ID = "EXTRA_MOVIE_ID";
     public static final String EXTRA_MOVIE = "EXTRA_MOVIE";
+    public static final String TWO_PANES = "TWO_PANES";
 
 }

@@ -27,12 +27,18 @@ import com.github.thiagolocatelli.popularmovies.app.util.PosterUtility;
  */
 public class MoviesAdapter  extends RecyclerView.Adapter<MovieViewHolder> {
 
-    private List<Movie> mMovieList;
+    public interface OnMovieSelectedListener {
+        void onMovieListSelected(MovieParcel movie);
+    }
+
+    private List<MovieParcel> mMovieList;
     private LayoutInflater mInflater;
     private Context mContext;
+    private OnMovieSelectedListener mOnMovieSelectedListener;
 
-    public MoviesAdapter(Context context) {
+    public MoviesAdapter(Context context, OnMovieSelectedListener onMovieSelectedListener) {
         this.mContext = context;
+        this.mOnMovieSelectedListener = onMovieSelectedListener;
         this.mInflater = LayoutInflater.from(context);
         this.mMovieList = new ArrayList<>();
     }
@@ -47,34 +53,16 @@ public class MoviesAdapter  extends RecyclerView.Adapter<MovieViewHolder> {
         View view = mInflater.inflate(R.layout.item_movie, parent, false);
         final MovieViewHolder viewHolder = new MovieViewHolder(view);
 
-        //RippleView ripple = view.find
         viewHolder.rippleView.setFrameRate(10);
         viewHolder.rippleView.setRippleDuration(200);
-
-        view.findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*int position = viewHolder.getAdapterPosition();
-                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
-                intent.putExtra(Constants.EXTRA_MOVIE_ID, mMovieList.get(position).getId());
-                intent.putExtra(Constants.EXTRA_MOVIE, new MovieParcel(mMovieList.get(position)));
-                //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, view.findViewById(R.id.imageView), "poster");
-                //ActivityCompat.startActivity(mActivity, intent, options.toBundle());
-                mContext.startActivity(intent);*/
-            }
-        });
-
         viewHolder.rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
 
             @Override
             public void onComplete(RippleView rippleView) {
-                int position = viewHolder.getAdapterPosition();
-                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
-                intent.putExtra(Constants.EXTRA_MOVIE_ID, mMovieList.get(position).getId());
-                intent.putExtra(Constants.EXTRA_MOVIE, new MovieParcel(mMovieList.get(position)));
-                //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, view.findViewById(R.id.imageView), "poster");
-                //ActivityCompat.startActivity(mActivity, intent, options.toBundle());
-                mContext.startActivity(intent);
+                if(mOnMovieSelectedListener != null){
+                    int position = viewHolder.getAdapterPosition();
+                    mOnMovieSelectedListener.onMovieListSelected(mMovieList.get(position));
+                }
             }
 
         });
@@ -84,13 +72,15 @@ public class MoviesAdapter  extends RecyclerView.Adapter<MovieViewHolder> {
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        Movie movie = mMovieList.get(position);
+        MovieParcel movie = mMovieList.get(position);
         Picasso.with(mContext)
                 .load(PosterUtility.getFullPosterPath342(movie.getPosterPath()))
+                .placeholder(R.drawable.movie_placeholder)
+                .fit()
                 .into(holder.imageView);
     }
 
-    public void setMovieList(List<Movie> movieList) {
+    public void setMovieList(List<MovieParcel> movieList) {
         this.mMovieList.clear();
         this.mMovieList.addAll(movieList);
         notifyDataSetChanged();

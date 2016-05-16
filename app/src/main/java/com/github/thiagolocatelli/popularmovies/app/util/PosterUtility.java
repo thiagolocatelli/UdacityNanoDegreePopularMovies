@@ -15,6 +15,10 @@ public class PosterUtility {
         return BASE_PATH + "w500" + posterPath;
     }
 
+    public static String getFullPosterPath300(String posterPath) {
+        return BASE_PATH + "w300" + posterPath;
+    }
+
     public static String getFullPosterPath342(String posterPath) {
         return BASE_PATH + "w342" + posterPath;
     }
@@ -25,5 +29,9 @@ public class PosterUtility {
 
     public static String getFullPosterPath154(String posterPath) {
         return BASE_PATH + "w154" + posterPath;
+    }
+
+    public static String getYouTubePosterPath(String movieId) {
+        return "http://img.youtube.com/vi/" + movieId + "/0.jpg";
     }
 }

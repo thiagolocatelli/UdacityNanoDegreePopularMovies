@@ -17,6 +17,11 @@ public class MovieParcel implements Parcelable {
     private String posterPath;
     private String backdrop;
 
+    private Long runtime;
+    private Double voteAverage;
+
+    public MovieParcel() {}
+
     public MovieParcel(Movie movie) {
         movieId = movie.getId();
         title = movie.getTitle();
@@ -33,6 +38,17 @@ public class MovieParcel implements Parcelable {
         releaseDate = source.readString();
         posterPath = source.readString();
         backdrop = source.readString();
+        runtime = source.readLong();
+        voteAverage = source.readDouble();
+
+        if(runtime.equals(-1l)) {
+            runtime = null;
+        }
+
+        if(voteAverage.equals(-1.0)) {
+            voteAverage = null;
+        }
+
     }
 
     @Override
@@ -48,6 +64,8 @@ public class MovieParcel implements Parcelable {
         parcel.writeString(releaseDate);
         parcel.writeString(posterPath);
         parcel.writeString(backdrop);
+        parcel.writeLong(runtime == null ? -1l : runtime);
+        parcel.writeDouble(voteAverage == null ? -1.0 : voteAverage);
     }
 
     public static final Parcelable.Creator<MovieParcel> CREATOR = new Parcelable.Creator<MovieParcel>() {
@@ -106,5 +124,21 @@ public class MovieParcel implements Parcelable {
 
     public void setBackdrop(String backdrop) {
         this.backdrop = backdrop;
+    }
+
+    public Long getRuntime() {
+        return runtime;
+    }
+
+    public void setRuntime(Long runtime) {
+        this.runtime = runtime;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 }

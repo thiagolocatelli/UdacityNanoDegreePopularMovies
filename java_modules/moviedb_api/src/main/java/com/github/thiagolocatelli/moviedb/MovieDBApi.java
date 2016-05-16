@@ -2,6 +2,8 @@ package com.github.thiagolocatelli.moviedb;
 
 import com.github.thiagolocatelli.moviedb.model.Movie;
 import com.github.thiagolocatelli.moviedb.model.MovieList;
+import com.github.thiagolocatelli.moviedb.model.Reviews;
+import com.github.thiagolocatelli.moviedb.model.MovieTrailersList;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -78,6 +80,14 @@ public class MovieDBApi {
 
     public Call<MovieList> getUpcomingMovies() {
         return movieDbService.getUpcomingMovies();
+    }
+
+    public Call<Reviews> getMovieReviews(Long movieId) {
+        return movieDbService.getMovieReviews(movieId);
+    }
+
+    public Call<MovieTrailersList> getMovieTrailers(Long movieId) {
+        return movieDbService.getMovieTrailers(movieId);
     }
 
 }

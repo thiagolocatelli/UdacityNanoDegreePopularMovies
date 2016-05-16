@@ -2,51 +2,66 @@ package com.github.thiagolocatelli.popularmovies.app.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.thiagolocatelli.popularmovies.app.R;
+import com.github.thiagolocatelli.popularmovies.app.fragment.MovieDetailsFragment;
 import com.github.thiagolocatelli.popularmovies.app.fragment.MoviesFragment;
+import com.github.thiagolocatelli.popularmovies.app.parcel.MovieParcel;
+import com.github.thiagolocatelli.popularmovies.app.util.Constants;
 
 
+public class MainActivity extends ActionBarActivity implements MoviesFragment.OnMovieSelectedListener {
 
-public class MainActivity extends AppCompatActivity {
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+    private boolean mTwoPane;
+    private MoviesFragment moviesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        MoviesFragment moviesFragment = new MoviesFragment();
+        if (findViewById(R.id.detail_container) != null) {
+            mTwoPane = true;
+            if (savedInstanceState != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.detail_container, new MovieDetailsFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+        }
+        else {
+            mTwoPane = false;
+        }
+
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Constants.TWO_PANES, mTwoPane);
+        moviesFragment = new MoviesFragment();
+        moviesFragment.setArguments(bundle);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, moviesFragment)
-                    .commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, moviesFragment).commit();
         }
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
@@ -54,5 +69,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    @Override
+    public void onMovieListSelected(MovieParcel movie) {
+        if(mTwoPane) {
+            Bundle bundle = new Bundle();
+            bundle.putLong(Constants.EXTRA_MOVIE_ID, movie.getMovieId());
+            bundle.putParcelable(Constants.EXTRA_MOVIE, movie);
+
+            MovieDetailsFragment movieDetailsFragment = new MovieDetailsFragment();
+            movieDetailsFragment.setArguments(bundle);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_container, movieDetailsFragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        }
+        else {
+            Intent intent = new Intent(this, MovieDetailsActivity.class);
+            intent.putExtra(Constants.EXTRA_MOVIE_ID, movie.getMovieId());
+            intent.putExtra(Constants.EXTRA_MOVIE, movie);
+            //ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, view.findViewById(R.id.imageView), "poster");
+            //ActivityCompat.startActivity(mActivity, intent, options.toBundle());
+            startActivity(intent);
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.github.thiagolocatelli.moviedb;
 
 import com.github.thiagolocatelli.moviedb.model.Movie;
 import com.github.thiagolocatelli.moviedb.model.MovieList;
+import com.github.thiagolocatelli.moviedb.model.Reviews;
+import com.github.thiagolocatelli.moviedb.model.MovieTrailersList;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -17,7 +19,7 @@ import retrofit2.Response;
  */
 public class MovieDBApiTest {
 
-    private static final String API_KEY = "ca8f06831f3ae106db50b2c86d56881d";
+    private static final String API_KEY = "";
 
     @Test
     public void testGetMovie() throws IOException {
@@ -48,6 +50,26 @@ public class MovieDBApiTest {
         MatcherAssert.assertThat(topRatedMoviesResponse, Matchers.notNullValue());
         MatcherAssert.assertThat(topRatedMoviesResponse.body(), Matchers.notNullValue());
 
+    }
+
+    @Test
+    public void testGetMovieTrailers() throws IOException {
+        MovieDBApi movieDbApi = new MovieDBApi(API_KEY);
+        Call<MovieTrailersList> moevieCall = movieDbApi.getMovieTrailers(271110l);
+        Response<MovieTrailersList> movieResponse = moevieCall.execute();
+
+        MatcherAssert.assertThat(movieResponse, Matchers.notNullValue());
+        MatcherAssert.assertThat(movieResponse.body(), Matchers.notNullValue());
+    }
+
+    @Test
+    public void testGetMovieReviews() throws IOException {
+        MovieDBApi movieDbApi = new MovieDBApi(API_KEY);
+        Call<Reviews> moevieCall = movieDbApi.getMovieReviews(293660l);
+        Response<Reviews> movieResponse = moevieCall.execute();
+
+        MatcherAssert.assertThat(movieResponse, Matchers.notNullValue());
+        MatcherAssert.assertThat(movieResponse.body(), Matchers.notNullValue());
     }
 
 }

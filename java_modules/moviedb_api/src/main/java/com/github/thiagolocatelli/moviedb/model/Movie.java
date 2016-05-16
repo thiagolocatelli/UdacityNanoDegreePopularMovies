@@ -35,6 +35,9 @@ public class Movie {
     private ImageList images;
     private MovieList similar;
 
+    private Reviews reviews;
+    private Trailers trailers;
+
     public String getPosterPath() {
         return posterPath;
     }
@@ -217,5 +220,21 @@ public class Movie {
 
     public void setSimilar(MovieList similar) {
         this.similar = similar;
+    }
+
+    public Reviews getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Reviews reviews) {
+        this.reviews = reviews;
+    }
+
+    public Trailers getTrailers() {
+        return trailers;
+    }
+
+    public void setTrailers(Trailers trailers) {
+        this.trailers = trailers;
     }
 }
